@@ -1,4 +1,6 @@
 FROM alpine:latest
+MAINTAINER midu@redhat.com
+
 RUN set -xe && apk add --update --no-progress dhcp && rm -rf /var/cache/apk/*
 RUN ["touch", "/var/lib/dhcp/dhcpd.leases"]
 COPY dhcpd.conf /etc/dhcp/dhcpd.conf
