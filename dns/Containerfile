@@ -16,4 +16,4 @@ COPY config/named.conf.local /etc/bind/
 COPY config/db.offline.oxtechnix.lan /etc/bind/zones/
 
 # Run eternal loop
-CMD ["/bin/bash", "-c", "while :; do /etc/init.d/bind9 start; done"]
+CMD ["/bin/bash", "-c", "while :; do sleep 10; done"]
