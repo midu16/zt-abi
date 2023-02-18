@@ -1,3 +1,29 @@
+Step 0. Configure the 2.1q interface
+- Create the 2.1q connection
+```bash
+sudo nmcli connection add type vlan con-name enp4s0f3u2.99 ifname enp4s0f3u2.99 dev enp4s0f3u2 id 99
+Connection 'enp4s0f3u2.99' (45e5804d-a195-455c-87aa-07488d167a3f) successfully added.
+```
+- Validate the creation of the connection
+```bash
+sudo nmcli con show
+NAME                        UUID                                  TYPE      DEVICE
+enp4s0f3u2.99               45e5804d-a195-455c-87aa-07488d167a3f  vlan      enp4s0f3u2.99
+```
+- Assign an ipv4.address to the connection
+```bash
+sudo nmcli connection modify enp4s0f3u2.99 ipv4.addresses '10.0.99.5/24'
+```
+- Validate that the interface connection has the ipv4.address
+```bash
+sudo ip a
+17: enp4s0f3u2.99@enp4s0f3u2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 9c:eb:e8:88:9f:72 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.99.5/24 brd 10.0.99.255 scope global noprefixroute enp4s0f3u2.99
+       valid_lft forever preferred_lft forever
+    inet6 fe80::918:83c:54e1:9485/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+```
 Step 1. Create a network using the macvlan driver
 ```bash
 $ podman network create -d macvlan --subnet=10.0.99.0/24 --gateway=10.0.99.1 -o parent=enp4s0f3u2 macvlan0
