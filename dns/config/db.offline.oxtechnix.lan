@@ -13,3 +13,4 @@ $TTL    604800
 ns1.offline.oxtechnix.lan.          IN      A      10.0.99.2
 
 INBACRNRDL0100.offline.oxtechnix.lan.        IN      A      10.0.99.5
+passacaglia.offline.oxtechnix.lan            IN      A      10.0.99.155
