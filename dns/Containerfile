@@ -1,30 +1,18 @@
-FROM docker.io/internetsystemsconsortium/bind9:9.18
+FROM ubuntu:bionic
 
-RUN apt update \
-  && apt install -y \
-  bind9-doc \
-  dnsutils \
-  geoip-bin \
-  mariadb-server \
-  net-tools
+RUN apt-get update \
+  && apt-get install -y \
+  bind9 \
+  bind9utils \
+  bind9-doc
 
-# Parsing the configration as a argument
-ARG options
-ARG local
-ARG zones
+# Enable IPv4
+RUN sed -i 's/OPTIONS=.*/OPTIONS="-4 -u bind"/' /etc/default/bind9
 
-ENV env_options=${options}
-ENV env_local=${local}
-ENV env_zones=${zones}
 # Copy configuration files
-COPY ${env_options} /etc/bind/
-COPY ${env_local} /etc/bind/
-COPY ${env_zones} /etc/bind/zones/
+COPY config/named.conf.options /etc/bind/
+COPY config/named.conf.local /etc/bind/
+COPY config/db.offline.oxtechnix.lan /etc/bind/zones/
 
-# Expose Ports
-EXPOSE 53/tcp
-EXPOSE 53/udp
-EXPOSE 953/tcp
-
-# Start the Name Service
-CMD ["/usr/sbin/named", "-g", "-c", "/etc/bind/named.conf", "-u", "bind"]
+# Run eternal loop
+CMD ["/bin/bash", "-c", "while :; do /etc/init.d/bind9 start; done"]

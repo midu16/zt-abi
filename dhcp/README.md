@@ -68,5 +68,24 @@ $ podman run -d --name ocp-dhcpd --restart unless-stopped --ip 10.0.99.6 --net=m
 Validating the funcitonality
 
 ```bash
-
+$ sudo podman logs ocp-dhcpd
+Internet Systems Consortium DHCP Server 4.4.3-P1
+Copyright 2004-2022 Internet Systems Consortium.
+All rights reserved.
+For info, please visit https://www.isc.org/software/dhcp/
+Config file: /etc/dhcp/dhcpd.conf
+Database file: /var/lib/dhcp/dhcpd.leases
+PID file: /run/dhcp/dhcpd.pid
+Wrote 0 deleted host decls to leases file.
+Wrote 0 new dynamic host decls to leases file.
+Wrote 0 leases to leases file.
+Listening on LPF/eth0/d2:4c:87:d1:8a:c5/10.0.99.0/24
+Sending on   LPF/eth0/d2:4c:87:d1:8a:c5/10.0.99.0/24
+Sending on   Socket/fallback/fallback-net
+Server starting service.
+Dynamic and static leases present for 10.0.99.155.
+Remove host declaration passacaglia or remove 10.0.99.155
+from the dynamic address pool for 10.0.99.0/24
+DHCPREQUEST for 10.0.99.155 from b8:27:eb:f0:d7:48 via eth0
+DHCPACK on 10.0.99.155 to b8:27:eb:f0:d7:48 via eth0
 ```

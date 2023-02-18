@@ -1,0 +1,4 @@
+zone "offline.oxtechnix.lan" {
+    type master;
+    file "/etc/bind/zones/db.offline.oxtechnix.lan";
+};
