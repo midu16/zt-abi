@@ -35,5 +35,5 @@ Successfully tagged localhost/ocp-dhcpd:latest
 ```
 Step 3. Run the container on your host
 ```bash
-$ podman run -d --restart unless-stopped --ip 10.0.99.6 --net=macvlan0 localhost/ocp-dhcpd:latest
+$ podman run -d --name ocp-dhcpd --restart unless-stopped --ip 10.0.99.6 --net=macvlan0 localhost/ocp-dhcpd:latest
 ```
