@@ -6,11 +6,6 @@ RUN curl -O -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.2/
 RUN tar zxvf openshift-client-linux.tar.gz 
 RUN cp -r kubectl oc /usr/local/bin/ 
 RUN  /usr/local/bin/oc version 
-WORKDIR / 
-RUN curl -O -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.2/oc-mirror.tar.gz
-RUN tar zxvf oc-mirror.tar.gz
-RUN chmod 777 /oc-mirror
-RUN cp oc-mirror /usr/local/bin/
-RUN /usr/local/bin/oc-mirror version
+COPY ./mirroring_script.sh /mirroring_script.sh
 
 CMD ["/bin/bash"]
