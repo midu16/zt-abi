@@ -1,7 +1,7 @@
 FROM docker.io/library/centos:7
 MAINTAINER midu@redhat.com
 # upgrading the image and installing packages to the container
-RUN sudo yum upgrade -y && sudo yum upgrade -y && sudo yum install epel-release -y && sudo yum install python3 -y
+RUN sudo -i && yum upgrade -y &&  yum upgrade -y &&  yum install epel-release -y &&  yum install python3 -y
 
 # downloading the oc-cli and oc-mirror-cli 
 WORKDIR / 
