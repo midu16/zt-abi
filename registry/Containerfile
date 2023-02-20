@@ -1,8 +1,5 @@
 FROM docker.io/library/centos:7
 MAINTAINER midu@redhat.com
-# upgrading the image and installing packages to the container
-RUN sudo -i && yum upgrade -y &&  yum upgrade -y &&  yum install epel-release -y &&  yum install python3 -y
-
 # downloading the oc-cli and oc-mirror-cli 
 WORKDIR / 
 RUN curl -O -L wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.2/openshift-client-linux.tar.gz && tar  zxvf openshift-client-linux.tar.gz && sudo cp -r kubectl oc /usr/local/bin/
