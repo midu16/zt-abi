@@ -9,7 +9,7 @@ RUN  /usr/local/bin/oc version
 WORKDIR / 
 RUN curl -O -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.2/oc-mirror.tar.gz
 RUN tar zxvf oc-mirror.tar.gz 
-RUN cp oc-mirror /usr/local/bin 
+RUN cp oc-mirror /usr/local/bin && chmod 775 /usr/local/bin/oc-mirror
 RUN /usr/local/bin/oc-mirror version
 
 CMD ["/bin/bash"]
