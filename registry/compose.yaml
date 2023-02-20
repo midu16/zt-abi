@@ -1,0 +1,22 @@
+---
+version: '3' 
+services: 
+  ocpdiscon-registry: 
+    image: docker.io/library/registry:2
+    ports:
+        - "5051:5000"
+    environment:
+        - REGISTRY_AUTH=htpasswd
+        - REGISTRY_AUTH_HTPASSWD_REALM=Registry
+        - REGISTRY_HTTP_SECRET=ALongRandomSecretForRegistry
+        - REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd
+        - REGISTRY_HTTP_TLS_CERTIFICATE=certs/domain.crt
+        - REGISTRY_HTTP_TLS_KEY=/certs/domain.key
+        - REGISTRY_COMPATIBILITY_SCHEMA1_ENABLED=true
+        - REGISTRY_STORAGE_DELETE_ENABLED=true
+    volumes:
+        - /apps/registry/data:/var/lib/registry:z
+        - /apps/registry/auth:/auth:z
+        - /apps/registry/certs:/certs:z
+    labels:
+        my.label: registry
