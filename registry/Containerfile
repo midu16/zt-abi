@@ -7,8 +7,9 @@ RUN tar zxvf openshift-client-linux.tar.gz
 RUN cp -r kubectl oc /usr/local/bin/
 RUN rm -rf /openshift-client-linux.tar.gz 
 RUN  /usr/local/bin/oc version 
-COPY ./mirroring_script.sh /mirroring_script.sh
+COPY ./config/mirroring_script.sh /mirroring_script.sh
 RUN chmod 775 mirroring_script.sh
+RUN mkdir /appl/
 
 # Run eternal loop
 CMD ["/bin/bash", "-c", "while :; do sleep 10; done"]
