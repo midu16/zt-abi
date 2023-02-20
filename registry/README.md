@@ -1,0 +1,4 @@
+
+```bash
+podman-compose up
+```

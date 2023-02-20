@@ -1,9 +1,5 @@
 ---
 version: "2"
-volumes:
-  data:
-  auth:
-  certs:
 services: 
   ocpdiscon-registry: 
     image: docker.io/library/registry:2
@@ -19,8 +15,8 @@ services:
         - REGISTRY_COMPATIBILITY_SCHEMA1_ENABLED=true
         - REGISTRY_STORAGE_DELETE_ENABLED=true
     volumes:
-        - data:/var/lib/registry
-        - auth:/auth
-        - certs:/certs
+        - /apps/registry/data:/var/lib/registry
+        - /apps/registry/auth:/auth
+        - /apps/registry/certs:/certs
     labels:
         my.label: registry
