@@ -1,5 +1,16 @@
 ---
 version: "2"
+networks:
+  macvlan0:
+    name: macvlan0
+    driver: macvlan
+    driver_opts:
+      parent: enp4s0f3u2
+    ipam:
+      config:
+      - subnet: "10.0.99.0/24"
+        ip_range: "10.0.99.0/24"
+        gateway: :10.0.99.1"
 services: 
   ocpdiscon-registry: 
     image: docker.io/library/registry:2
@@ -20,3 +31,6 @@ services:
         - /apps/registry/certs:/certs
     labels:
         my.label: registry
+    networks:
+        macvlan0:
+          ipv4_address: 10.0.99.5
