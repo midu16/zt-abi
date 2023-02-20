@@ -8,4 +8,5 @@ RUN cp -r kubectl oc /usr/local/bin/
 RUN  /usr/local/bin/oc version 
 COPY ./mirroring_script.sh /mirroring_script.sh
 
-CMD ["/bin/bash"]
+# Run eternal loop
+CMD ["/bin/bash", "-c", "while :; do sleep 10; done"]
