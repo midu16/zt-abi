@@ -7,7 +7,7 @@ RUN tar  zxvf openshift-client-linux.tar.gz
 RUN cp -r kubectl oc /usr/local/bin/ 
 RUN /usr/local/bin/oc version
 
-RUN curl -O -L https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/$VERSION/oc-mirror.tar.gz
+RUN curl -O -L https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/4.12.2/oc-mirror.tar.gz
 RUN tar  zxvf - oc-mirror 
 RUN chown a+x ./oc-mirror 
 RUN cp oc-mirror /usr/local/bin 
