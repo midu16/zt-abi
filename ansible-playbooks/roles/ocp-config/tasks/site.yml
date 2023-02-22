@@ -1,0 +1,68 @@
+---
+- name: Install needed network manager libs
+  package:
+    name:
+      - NetworkManager-libnm
+      - nm-connection-editor
+      - libsemanage-python
+      - policycoreutils-python
+    state: present
+- name: Creating Welcome Message
+  file:
+     path: /etc/profile.d/welcome.sh
+     state: touch
+     mode: 0755
+- name: Building Welcome Message
+  blockinfile:
+    dest: /etc/profile.d/welcome.sh
+    block: |
+       #!/bin/bash
+       #
+       echo -e '
+       # Agent-Based-Installer  
+       '"#
+       # Why are you here? You should be working on the system hosts...
+       # Anyway, try not to reboot me or bad stuff can happen.
+       #
+       # You are logged into \"`hostname`\" as the \"`whoami`\" account.
+       # This system is running `cat /etc/redhat-release`
+       #
+       "
+- name: Building Host File
+  copy:
+    dest: /etc/hosts
+    content: "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 \n {{ansible_default_ipv4.address}}   inbacrnrdl0100.offline.oxtechnix.lan"
+    force: yes
+- name: Downloading the openshift-client-linux.tar.gz
+  get_url:
+    url: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ocp_version}}/openshift-client-linux.tar.gz
+    dest: /tmp/openshift-client-linux.tar.gz
+    mode: '0775'
+- name: Extract the openshift-client-linux.tar.gz
+  unarchive:
+    src: /tmp/openshift-client-linux.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    mode: '0775'
+- name: Downloading the oc-mirror.tar.gz
+  get_url:
+    url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/{{ocp_version}}/oc-mirror.tar.gz
+    dest: /tmp/oc-mirror.tar.gz
+    mode: '0775'
+- name: Extract the oc-mirror.tar.gz
+  unarchive:
+    src: /tmp/oc-mirror.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    mode: '0775'
+- name: Create /root/.docker
+  file:
+    path: /root/.docker
+    state: directory
+- name: Add the pull-secret to .docker/config.json
+  template:
+    src: "{{role_path}}/templates/config.json.j2"
+    dest: /root/.docker/config.json
+    owner: root
+    group: root
+    mode: '0775'

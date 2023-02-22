@@ -1,5 +1,13 @@
 # zt-abi
- 
+
+
+Checkist:
+
+- Network switches are configured
+- Server BMC are reachable
+- The deployment node should have 1 interface connected in the same subnet with the Servers
+- 
+
 Directory structure:
 ```bash
 ```

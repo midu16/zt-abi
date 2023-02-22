@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: <<-SHELL
         echo "fastestmirror=1" >> /etc/dnf/dnf.conf
         # installing all required packages
-        dnf update -y && dnf -y install podman httpd httpd-tools jq skopeo libseccomp-devel podman-compose tree lvm2
+        dnf update -y && dnf -y install podman httpd httpd-tools jq skopeo libseccomp-devel podman-compose tree lvm2 ansible 
         # exporting the env variables
         export REGISTRY_NAME="inbacrnrdl0100.offline.oxtechnix.lan"
         export REGISTRY_USER='pi'
@@ -105,7 +105,8 @@ Vagrant.configure("2") do |config|
         # adding certs to localhost
         update-ca-trust extract
         htpasswd -bBc ${REGISTRTY_PATH}/auth/htpasswd ${REGISTRY_USER} ${REGISTRY_PASSWORD}
-        sudo systemctl enable --now podman.socket
-        sudo systemctl status podman.socket
+        systemctl enable --now podman.socket
+        systemctl status podman.socket
+        podman network create -d macvlan --subnet=10.0.99.0/24 --gateway=10.0.99.1 -o parent=eth1 macvlan0
     SHELL
   end

@@ -1,0 +1,9 @@
+---
+- name: Create the ABI host
+  hosts: all
+  gather_facts: yes
+  vars_files:
+    - roles/ocp-config/vars/global.yml
+    - roles/ocp-config/vars/vault
+  roles:
+    - ocp-config
