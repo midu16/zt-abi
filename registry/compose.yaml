@@ -35,7 +35,7 @@ services:
         macvlan0:
           ipv4_address: 10.0.99.5
   httpd-server:
-    image: 
+    image: quay.io/centos7/httpd-24-centos7:latest
     ports: 
         - "3000:8080"
     volumes:
