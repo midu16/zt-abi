@@ -34,3 +34,15 @@ services:
     networks:
         macvlan0:
           ipv4_address: 10.0.99.5
+  httpd-server:
+    image: 
+    ports: 
+        - "3000:8080"
+    volumes:
+        - /apps/rhcos_image_cache:/var/www/html
+    labels:
+        my.label: httpd-abi
+    networks:
+        macvlan0:
+          ipv4_address: 10.0.99.4
+

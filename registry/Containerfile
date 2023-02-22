@@ -1,5 +1,10 @@
 FROM docker.io/library/centos:7
 MAINTAINER midu@redhat.com
+# update the container base image and install httpd
+RUN yum update -y
+RUN yum install httpd -y
+# adding a front page just for validation
+COPY config/index.html /var/www/html/
 # downloading the oc-cli and oc-mirror-cli 
 WORKDIR / 
 RUN curl -O -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.2/openshift-client-linux.tar.gz 
@@ -9,7 +14,7 @@ RUN rm -rf /openshift-client-linux.tar.gz
 RUN  /usr/local/bin/oc version 
 COPY ./config/mirroring_script.sh /mirroring_script.sh
 RUN chmod 775 mirroring_script.sh
-RUN mkdir /appl/
 
-# Run eternal loop
-CMD ["/bin/bash", "-c", "while :; do sleep 10; done"]
+
+# Run httpd service 
+ENTRYPOINT ["/usr/sbin/httpd","-D","FOREGROUND"]
