@@ -1,21 +1,11 @@
 ---
 version: "2"
-networks:
-  macvlan0:
-    name: macvlan0
-    driver: macvlan
-    driver_opts:
-      parent: enp4s0f3u2
-    ipam:
-      config:
-      - subnet: "10.0.99.0/24"
-        ip_range: "10.0.99.0/24"
-        gateway: :10.0.99.1"
-services: 
-  ocpdiscon-registry: 
-    image: docker.io/library/registry:2
+services:
+  ocpdiscon-registry:
+    restart: always
+    image: quay.io/midu/registry:latest
     ports:
-        - "5051:5000"
+        - "5000:5000"
     environment:
         - REGISTRY_AUTH=htpasswd
         - REGISTRY_AUTH_HTPASSWD_REALM=Registry
@@ -26,23 +16,36 @@ services:
         - REGISTRY_COMPATIBILITY_SCHEMA1_ENABLED=true
         - REGISTRY_STORAGE_DELETE_ENABLED=true
     volumes:
-        - /apps/registry/data:/var/lib/registry
-        - /apps/registry/auth:/auth
-        - /apps/registry/certs:/certs
+        - /apps/registry/data:/var/lib/registry:z
+        - /apps/registry/auth:/auth:z
+        - /apps/registry/certs:/certs:z
     labels:
-        my.label: registry
-    networks:
-        macvlan0:
-          ipv4_address: 10.0.99.5
-  httpd-server:
-    image: quay.io/centos7/httpd-24-centos7:latest
+        my.label: ocpdiscon_registry
+  rhcos_image_cache:
+    restart: always
+    image: quay.io/midu/httpd:latest
     ports: 
         - "3000:8080"
     volumes:
-        - /apps/rhcos_image_cache:/var/www/html
+        - /apps/rhcos_image_cache:/var/www/html:z
     labels:
-        my.label: httpd-abi
+        my.label: rhcos_image_cache
+  rhocp-dns:
+    restart: always
+    image: quay.io/midu/dns:latest
+    volumes:
+        - /apps/bind/primary:/data:z
+    ports:
+        - "53:53/tcp"
+        - "53:53/udp"
+    labels:
+        my.label: rhocp_bind9
+  rhocp-dhcp:
+    image: quay.io/midu/dhcpd:latest
     networks:
-        macvlan0:
-          ipv4_address: 10.0.99.4
-
+      internal_network:
+          ipv4_address: 10.0.99.2
+    volumes:
+        - /apps/dhcp:/etc/dhcp:z
+    labels:
+        my.label: rhocp_dhcp
