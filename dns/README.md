@@ -27,5 +27,5 @@ Successfully tagged localhost/ocp-bind9:latest
 ```
 Step 2. Run the container on your host
 ```bash
-$ podman run -d --name ocp-bind9 --restart unless-stopped --ip 10.0.99.2 --net=macvlan0 localhost/ocp-bind9:latest
+$ podman run --name bind -d --publish 53:53/tcp --publish 53:53/udp --volume $(pwd)/config/primary:/data:z  localhost/ocp-bind9:latest
 ```
