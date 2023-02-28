@@ -13,6 +13,12 @@ Directory structure:
 ```
 
 Requirements:
+## Connectivity requirements:
+
+This `vagrant-sandbox` can be run on a small enterprise computer (e.g. laptop, COST PC, etc) which will need at least 2 interface connectivy:
+- first interface should have public internet access (e.g. wifi interface, eth0/ens0) - the purpose is to be able to dowload the required packages from the public repositories on the device and proceed with the installation.
+- second interface should connect to the L2 cluster switch and have access to BMC and server ssh console.
+
 
 ## Installation option:
 ## macOS:
